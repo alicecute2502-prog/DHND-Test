@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PNE Marketing Strategy 2026 - Master Keynote Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pne: {
+                            red: "#D12026",
+                            "red-dark": "#A8161B",
+                            gold: "#FFCC00",
+                            dark: "#1A1A1A",
+                            gray: "#F8F9FA",
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel (Biên dịch JSX trực tiếp trên trình duyệt) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #D12026; border-radius: 3px; }
+    </style>
+</head>
+<body class="bg-pne-gray text-pne-dark antialiased selection:bg-pne-red selection:text-white">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Data nguồn chuẩn 2026
+        const MARKETING_DATA = {
+            brand: {
+                name: "Phuong Nam Education (PNE)",
+                tagline: "Hệ sinh thái Du học nghề Đức khép kín & tự chủ tại TP.HCM",
+                stats: { years: 15, passOsdt: 97.3, visaPass: 100 }
+            },
+            trends: [
+                { title: "Chuyển dịch sang Học nghề thực chiến", tag: "#AusbildungBềnVững", desc: "Tự chủ tài chính ngay nhờ trợ cấp hàng tháng, nhận quyền định cư vĩnh viễn chỉ sau 2 năm làm việc." },
+                { title: "Chính sách nâng lương tối thiểu 2026", tag: "#LươngTốiThựcĐức2026", desc: "Lương tối thiểu tăng €13,90/giờ, Minijob đạt tối đa €603/tháng. Trợ cấp thực tập tăng mạnh ở Y tế, Kỹ thuật." },
+                { title: "Bùng nổ Kỹ thuật tương lai & IT", tag: "#CôngNghệXanh", desc: "Chuyển dịch dịch vụ sang Ô tô điện (EV), Cơ điện tử tự động hóa và IT (Fachinformatiker)." },
+                { title: "Bộ lọc B2 Thực tế", tag: "#TiếngĐứcB2", desc: "Dù B1 là điều kiện tối thiểu, 90% doanh nghiệp Đức ưu tiên B2 để học viên vượt qua thời gian thử việc." },
+                { title: "Luật nhập cư nới lỏng 2026", tag: "#ĐịnhCưĐức2Năm", desc: "Thường trú nhân chỉ sau 02 năm làm việc chính thức đúng chuyên ngành." }
+            ],
+            personas: [
+                {
+                    id: "p1", name: "Người Đổi Đời", age: "22 - 28 tuổi", target: "Sinh viên mới tốt nghiệp / Dân văn phòng kiệt quệ",
+                    quote: "Lương văn phòng tăng không kịp lạm phát, đi làm như bị bào sức. Muốn đi Đức để bứt phá sòng phẳng.",
+                    insight: "Hoảng loạn tuổi 25+ và kiệt quệ sinh học. Sợ 30 tuổi vẫn đi làm thuê lương ba cọc ba đồng.",
+                    role: "Tỷ lệ chốt đơn nhanh nhất", marketShare: 35,
+                    fear: ["Mất trắng thanh xuân", "Bay hụt do luật thay đổi", "Bị bào tiền tích lũy"]
+                },
+                {
+                    id: "p2", name: "Gia Đình Lo Toan", age: "45 - 55 tuổi (Phụ huynh)", target: "Phụ huynh đô thị & tỉnh lân cận TP.HCM",
+                    quote: "Con cô ở nhà nó lười lắm, tiền bạc cô không tiếc, miễn sao qua bển an toàn, không bị đem con bỏ chợ.",
+                    insight: "Sự kiệt quệ niềm tin và nỗi sợ con sa ngã. Cần mua một 'người mẹ thay thế' bảo vệ con tại Đức.",
+                    role: "Nhóm chi trả hào phóng nhất", marketShare: 25,
+                    fear: ["Con bơ vơ, bị lừa gạt", "Đau ốm không ai lo", "Gặp trung tâm ma"]
+                },
+                {
+                    id: "p3", name: "Gen Z Thực Tế", age: "18 - 21 tuổi", target: "Học sinh THPT / Sinh viên ĐH đại trà",
+                    quote: "Học đại học đại trà ra trường sợ làm shipper. Đi Đức có lương vừa ngầu vừa tự lập.",
+                    insight: "Cần 'lối thoát danh dự' mang mác đi Châu Âu để không mang tiếng thất bại nhưng sợ học tiếng khó.",
+                    role: "Tạo tương tác lớn nhất MXH", marketShare: 20,
+                    fear: ["Tiếng Đức bể não", "Mang tiếng thất bại", "Làm công việc rẻ mạt"]
+                }
+            ],
+            competitors: [
+                { name: "CMMB Việt Nam", type: "Cựu binh Học thuật", strongestChannel: "Community Group / Webinar", strategy: "Tập trung Y tế/Bác sĩ, uy tín chuyên môn cao", weakness: "Hình ảnh hàn lâm, cồng kềnh, TikTok yếu" },
+                { name: "IECS (Vua Tiếng Đức)", type: "Inbound SEO Leader", strongestChannel: "Website (iecs.vn)", strategy: "Product-Led Growth, dùng App học tiếng làm Lead Magnet", weakness: "Tương tác MXH dạng video ngắn còn hạn chế" },
+                { name: "EduGo Group", type: "Tân binh Viral", strongestChannel: "TikTok (@edugo_group - 40.9K)", strategy: "Omnichannel & Performance Ads trên clip viral", weakness: "Chăm sóc cá nhân hóa chưa tối ưu, mạnh miền Bắc" }
+            ],
+            pillars: [
+                { id: 1, title: "Người Thật Việc Thật", ratio: 25, focus: "Show Visa, tiễn bay, vlogs từ Đức" },
+                { id: 2, title: "Bảo Chứng Chứng Chỉ Tiếng Đức", ratio: 20, focus: "Trạm thi ÖSD chính thức tại TP.HCM" },
+                { id: 3, title: "Lối Thoát & An Tâm", ratio: 20, focus: "Giải tỏa bế tắc tuổi 25+, an lòng cha mẹ" },
+                { id: 4, title: "Hướng Nghiệp Thực Dụng", ratio: 15, focus: "Smart Nursing 4.0, Kỹ thuật Xanh, IT" },
+                { id: 5, title: "Sòng Phẳng Tài Chính", ratio: 10, focus: "Nói không với chi phí ẩn, hợp đồng phẳng" },
+                { id: 6, title: "Học Thử Tương Tác", ratio: 10, focus: "App EdTech PNE Hub, Event học thử 0đ" }
+            ]
+        };
+
+        const CHAPTERS = [
+            { id: "research", title: "01. Nghiên cứu", desc: "McKinsey Style Report" },
+            { id: "strategy", title: "02. Chiến lược & Định vị", desc: "Brand Keynote" },
+            { id: "review", title: "03. Review & Đề xuất", desc: "Fanpage Audit Plan" },
+            { id: "guidelines", title: "04. Quy chuẩn truyền thông", desc: "Brand Book" },
+            { id: "visual", title: "05. Visual Guideline", desc: "Figma UI System" },
+        ];
+
+        function App() {
+            const [activeSection, setActiveSection] = useState("research");
+            const [selectedPersona, setSelectedPersona] = useState(MARKETING_DATA.personas[0]);
+
+            useEffect(() => {
+                lucide.createIcons();
+                const handleScroll = () => {
+                    const scrollPosition = window.scrollY + 250;
+                    for (let i = CHAPTERS.length - 1; i >= 0; i--) {
+                        const el = document.getElementById(CHAPTERS[i].id);
+                        if (el && el.offsetTop <= scrollPosition) {
+                            setActiveSection(CHAPTERS[i].id);
+                            break;
+                        }
+                    }
+                };
+                window.addEventListener("scroll", handleScroll);
+                return () => window.removeEventListener("scroll", handleScroll);
+            }, []);
+
+            const scrollTo = (id) => {
+                document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+            };
+
+            return (
+                <div className="flex flex-col lg:flex-row min-h-screen">
+                    {/* Sidebar Fixed Navigation */}
+                    <aside className="w-full lg:w-72 bg-pne-dark text-white p-6 lg:fixed lg:top-0 lg:bottom-0 z-50 flex flex-col justify-between border-r border-gray-800">
+                        <div>
+                            <div className="text-2xl font-black text-pne-red tracking-tight">PNE STRATEGY</div>
+                            <div className="text-[10px] text-gray-400 uppercase tracking-widest font-semibold mt-1">Keynote Dashboard 2026</div>
+                            
+                            <nav className="mt-8 space-y-2">
+                                {CHAPTERS.map(chap => (
+                                    <button
+                                        key={chap.id}
+                                        onClick={() => scrollTo(chap.id)}
+                                        className={`w-full text-left p-3 rounded-xl transition-all flex flex-col ${
+                                            activeSection === chap.id ? "bg-pne-red text-white shadow-lg font-bold" : "text-gray-400 hover:text-white hover:bg-white/5"
+                                        }`}
+                                    >
+                                        <span className="text-xs font-bold">{chap.title}</span>
+                                        <span className={`text-[10px] ${activeSection === chap.id ? "text-white/80" : "text-gray-500"}`}>{chap.desc}</span>
+                                    </button>
+                                ))}
+                            </nav>
+                        </div>
+                        <div className="mt-8 text-[10px] text-gray-500">Phuong Nam Education © 2026</div>
+                    </aside>
+
+                    {/* Main Content Area */}
+                    <main className="lg:ml-72 flex-1">
+                        
+                        {/* CHAPTER 1: RESEARCH */}
+                        <section id="research" className="py-20 px-6 lg:px-12 bg-white border-b border-gray-200">
+                            <div className="max-w-5xl mx-auto space-y-12">
+                                <div>
+                                    <span className="text-xs font-mono uppercase tracking-widest text-pne-red font-bold">Chapter 01</span>
+                                    <h1 className="text-4xl lg:text-5xl font-black text-pne-dark mt-2">NGHIÊN CỨU THỊ TRƯỜNG & KHÁCH HÀNG</h1>
+                                    <p className="text-sm text-gray-600 mt-2">Báo cáo phân tích bối cảnh du học nghề Đức 2026 chuẩn phong cách McKinsey + Apple.</p>
+                                </div>
+
+                                {/* Hero Stats */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200">
+                                        <span className="text-xs uppercase font-bold text-gray-400 block mb-1">Thâm niên thương hiệu</span>
+                                        <div className="text-4xl font-black text-pne-dark">15 <span className="text-xl text-pne-red">Năm</span></div>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-pne-dark text-white border border-pne-gold/40">
+                                        <span className="text-xs uppercase font-bold text-pne-gold block mb-1">Tỷ lệ đỗ ÖSD lần đầu</span>
+                                        <div className="text-4xl font-black text-pne-gold">97.3%</div>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200">
+                                        <span className="text-xs uppercase font-bold text-gray-400 block mb-1">Tỷ lệ đậu Visa Đức</span>
+                                        <div className="text-4xl font-black text-pne-red">100%</div>
+                                    </div>
+                                </div>
+
+                                {/* Persona Selector */}
+                                <div className="space-y-6">
+                                    <h3 className="text-xl font-bold">Chân Dung Học Viên (Personas)</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {MARKETING_DATA.personas.map(p => (
+                                            <button
+                                                key={p.id}
+                                                onClick={() => setSelectedPersona(p)}
+                                                className={`p-4 rounded-xl text-left border transition-all ${selectedPersona.id === p.id ? "bg-pne-red text-white border-pne-red shadow-md" : "bg-white border-gray-200 hover:bg-gray-50"}`}
+                                            >
+                                                <div className="font-bold text-sm">{p.name}</div>
+                                                <div className="text-xs opacity-80">{p.age} • {p.marketShare}%</div>
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="p-6 rounded-2xl bg-gray-50 border border-gray-200 space-y-4">
+                                        <div className="flex justify-between items-center border-b pb-3">
+                                            <h4 className="text-xl font-black text-pne-dark">{selectedPersona.name}</h4>
+                                            <span className="text-xs font-bold text-pne-red bg-red-100 px-3 py-1 rounded-full">{selectedPersona.role}</span>
+                                        </div>
+                                        <p className="italic text-xs bg-pne-gold/20 p-3 rounded-lg border-l-4 border-pne-gold">"{selectedPersona.quote}"</p>
+                                        <p className="text-xs text-gray-700"><strong>Insight:</strong> {selectedPersona.insight}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* CHAPTER 2: STRATEGY */}
+                        <section id="strategy" className="py-20 px-6 lg:px-12 bg-pne-dark text-white border-b border-gray-800">
+                            <div className="max-w-5xl mx-auto space-y-12">
+                                <div>
+                                    <span className="text-xs font-mono uppercase tracking-widest text-pne-gold font-bold">Chapter 02</span>
+                                    <h2 className="text-4xl font-black mt-2">CHIẾN LƯỢC & ĐỊNH VỊ THƯƠNG HIỆU</h2>
+                                </div>
+
+                                <div className="max-w-2xl mx-auto space-y-4">
+                                    <div className="p-6 rounded-2xl bg-pne-red text-center">
+                                        <span className="text-[10px] font-bold text-pne-gold uppercase">Brand Purpose</span>
+                                        <h3 className="text-xl font-black mt-1">LỰA CHỌN SÒNG PHẲNG - BỨT PHÁ TỰ CHỦ</h3>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-white/10 border border-white/20 text-center">
+                                        <span className="text-[10px] font-bold text-pne-gold uppercase">Emotional Benefits</span>
+                                        <h3 className="text-base font-bold mt-1">An Tâm Cho Cha Mẹ • Tự Do Cho Người Trẻ</h3>
+                                    </div>
+                                    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+                                        <span className="text-[10px] font-bold text-pne-gold uppercase">Functional Proof</span>
+                                        <h3 className="text-sm font-bold mt-1">Trạm Thi ÖSD Tại Chỗ • 97.3% Đỗ Lần Đầu</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* CHAPTER 3: REVIEW */}
+                        <section id="review" className="py-20 px-6 lg:px-12 bg-white border-b border-gray-200">
+                            <div className="max-w-5xl mx-auto space-y-8">
+                                <div>
+                                    <span className="text-xs font-mono uppercase tracking-widest text-pne-red font-bold">Chapter 03</span>
+                                    <h2 className="text-4xl font-black text-pne-dark mt-2">REVIEW FANPAGE & CONTENT PLAN</h2>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    {MARKETING_DATA.pillars.map(p => (
+                                        <div key={p.id} className="p-5 rounded-xl bg-gray-50 border border-gray-200">
+                                            <div className="text-2xl font-black text-pne-red">{p.ratio}%</div>
+                                            <div className="font-bold text-sm text-pne-dark mt-1">{p.title}</div>
+                                            <div className="text-xs text-gray-500 mt-2">{p.focus}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* CHAPTER 4: GUIDELINES */}
+                        <section id="guidelines" className="py-20 px-6 lg:px-12 bg-gray-900 text-white border-b border-gray-800">
+                            <div className="max-w-5xl mx-auto space-y-8">
+                                <div>
+                                    <span className="text-xs font-mono uppercase tracking-widest text-pne-gold font-bold">Chapter 04</span>
+                                    <h2 className="text-4xl font-black mt-2">QUY CHUẨN TRUYỀN THÔNG (BRAND BOOK)</h2>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                                        <h4 className="font-bold text-pne-gold mb-3">Xưng Hô Chuẩn</h4>
+                                        <p className="text-xs text-gray-300 leading-relaxed">Xưng hô: "Trung tâm" hoặc "Nhà Phương Nam Education". Tôn vinh học viên là những "Người trẻ bản lĩnh, tự lập".</p>
+                                    </div>
+                                    <div className="p-6 rounded-xl bg-white/5 border border-white/10">
+                                        <h4 className="font-bold text-pne-gold mb-3">Ngôn Từ Pháp Lý</h4>
+                                        <p className="text-xs text-gray-300 leading-relaxed">Tuyệt đối không dùng từ "Bao đậu 100%" hay "Cam kết bay". Chỉ dùng "Bảo chứng trạm thi ÖSD tại chỗ" & "Hợp đồng phẳng minh bạch".</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* CHAPTER 5: VISUAL GUIDELINE */}
+                        <section id="visual" className="py-20 px-6 lg:px-12 bg-white">
+                            <div className="max-w-5xl mx-auto space-y-8">
+                                <div>
+                                    <span className="text-xs font-mono uppercase tracking-widest text-pne-red font-bold">Chapter 05</span>
+                                    <h2 className="text-4xl font-black text-pne-dark mt-2">VISUAL GUIDELINE (FIGMA SYSTEM)</h2>
+                                </div>
+
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div className="p-4 rounded-xl bg-[#D12026] text-white">
+                                        <span className="text-xs font-bold block">Primary Red</span>
+                                        <span className="text-lg font-black">#D12026</span>
+                                    </div>
+                                    <div className="p-4 rounded-xl bg-[#FFCC00] text-pne-dark">
+                                        <span className="text-xs font-bold block">Accent Gold</span>
+                                        <span className="text-lg font-black">#FFCC00</span>
+                                    </div>
+                                    <div className="p-4 rounded-xl bg-[#1A1A1A] text-white">
+                                        <span className="text-xs font-bold block">Dark Neutral</span>
+                                        <span className="text-lg font-black">#1A1A1A</span>
+                                    </div>
+                                    <div className="p-4 rounded-xl bg-[#F8F9FA] text-pne-dark border">
+                                        <span className="text-xs font-bold block">Light Neutral</span>
+                                        <span className="text-lg font-black">#F8F9FA</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <footer className="p-8 bg-pne-dark text-white text-center text-xs text-gray-500">
+                            Phuong Nam Education © 2026 - Master Presentation Hub
+                        </footer>
+
+                    </main>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
